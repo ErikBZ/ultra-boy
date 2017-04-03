@@ -6,6 +6,7 @@ using UnityEngine;
 // it needs access to that Character's rigidbody and 
 // therefore must be required
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(GroundChecker))]
 
 // nothing in these scripts that inherit from MonoBehaviour should 
 // have public variables
@@ -16,7 +17,8 @@ public class PlayerController : MonoBehaviour
 
 	// GameObjects compontents and references
 	Rigidbody2D rb;
-	Animator animator;
+    // this isn't needed just yet
+    // Animator animator;
 
 	//moving variables
 	public float topSpeed = 10f;
@@ -24,6 +26,10 @@ public class PlayerController : MonoBehaviour
 
 	//jumping variable
 	bool grounded = false;
+
+    // TODO make this into a reference for GroundChecker
+    // that has a bool called "grounded" which keeps track of
+    // the player's relation to the ground
 	public Transform groundCheck;  //check to see if character is grounded
 	float groundRadius = 0.2f; // How big circle is going to be when checking distance to the ground
 	public float jumpForce = 500f; // force of the jump
@@ -35,7 +41,7 @@ public class PlayerController : MonoBehaviour
 	{
 		// getting a reference to this gameobejcts rigdbody
 		rb = GetComponent<Rigidbody2D>();
-		animator = GetComponent<Animator>();
+		//animator = GetComponent<Animator>();
 	}
 
 	// Update is called once per frame
@@ -44,10 +50,14 @@ public class PlayerController : MonoBehaviour
 	{
 		if (grounded && Input.GetKeyDown (KeyCode.Space)) 
 		{
-			// not on ground
-			animator.SetBool ("Ground", false);
-			// add jump force to character's y-axis 
-			rb.AddForce(new Vector2(0, jumpForce));
+            // not on ground
+            //animator.SetBool ("Ground", false);
+            
+            // all this stuff should be done in Jump() too
+            // add jump force to character's y-axis 
+            // setting veloctiy may be a better choice
+            // rb.velocity = someVel;
+            rb.AddForce(new Vector2(0, jumpForce));
 		}
 
 	}
@@ -72,9 +82,7 @@ public class PlayerController : MonoBehaviour
 	{
 		// check for ground contact
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
-		animator.SetBool ("Ground", grounded);
-		// verticle speed
-		animator.SetFloat ("vSpeed", rb.velocity.y);
+        // you have to use the rigidbody to set the velocty
 	}
 
 	// this method should be used for moving left and right
@@ -86,8 +94,9 @@ public class PlayerController : MonoBehaviour
 		//add velocity to the rigidbody in the move direction * speed
 		rb.velocity = new Vector2(move*topSpeed, rb.velocity.y);
 
-		//Set a float to speed based on the amt of float value (0.1)
-		animator.SetFloat ("Speed", Mathf.Abs (move));
+        //Set a float to speed based on the amt of float value (0.1)
+        // this once we have a sprite to animate. for now leave it commented
+        // animator.SetFloat ("Speed", Mathf.Abs (move));
 
 		//flip direction
 		if (move > 0 && !facingRight) 
