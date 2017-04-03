@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 1005067293}
   - component: {fileID: 1005067294}
   - component: {fileID: 1005067295}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 1419440548}
   - component: {fileID: 1419440551}
   - component: {fileID: 1419440552}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Main Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -365,9 +365,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1419440546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85401fd8c5920014cbc1de4fd42b790f, type: 3}
+  m_Script: {fileID: 11500000, guid: b570928a55d844caca6c901966f639f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topSpeed: 10
+  groundCheck: {fileID: 1005067293}
+  jumpForce: 500
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1773412030
 GameObject:
   m_ObjectHideFlags: 0
