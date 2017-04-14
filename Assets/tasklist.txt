@@ -1,0 +1,9 @@
+TODO: Fix up Player Controller.
+	I put in some TODOs there. To fix the double jumping issue all you have to do is
+	put a circle collider at the bottom of the game object. - THAI
+
+TODO: Create the Camera rigging so it follows the player. - DAVID
+
+TODO: If the player hits a "hazard" which can be something like a spike, or enemy,
+	then they must die. For now just output "Player hit by enemy/hazard" onto the console
+	- MO
