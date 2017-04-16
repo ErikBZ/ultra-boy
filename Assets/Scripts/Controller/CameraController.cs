@@ -10,8 +10,9 @@ public class CameraController : MonoBehaviour {
      * the player GameObject. We don't reference Tranform, or PlayerController
      * because we only need to know the position which is saved under Transform
      */
-    Transform player;
+    public Transform player;
 
+    private const int _cameraDepth = -10;
 	// Use this for initialization
 	void Start () {
 		// No initialzation is needed for this because
@@ -27,9 +28,10 @@ public class CameraController : MonoBehaviour {
     // velocity though, or some sort of position change.
 	void Update () {
         // if there is no player then the camera will remain still
-        if(player != null)
+        if (player != null)
         {
             // we update here or do some other checks
+            UpdateCamera();
         }
 	}
 
@@ -39,5 +41,7 @@ public class CameraController : MonoBehaviour {
     void UpdateCamera()
     {
         // put the code for how you will update the camera here
+        Vector3 pos = new Vector3(player.position.x, player.position.y, _cameraDepth);
+        this.transform.position = pos;
     }
 }
