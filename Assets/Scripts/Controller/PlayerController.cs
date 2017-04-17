@@ -7,6 +7,7 @@ using UnityEngine;
 // therefore must be required
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(GroundChecker))]
+[RequireComponent(typeof(GunController))]
 
 // nothing in these scripts that inherit from MonoBehaviour should 
 // have public variables
@@ -28,6 +29,9 @@ public class PlayerController : MonoBehaviour
     GroundChecker _gc;
     public float _jumpSpeed = 10f;
 
+    // the gun contgroller
+    GunController _gun;
+
 	// Use this for initialization
 	// this is basically a constructor
 	private void Start()
@@ -35,7 +39,8 @@ public class PlayerController : MonoBehaviour
 		// getting a reference to this gameobejcts rigdbody
 		rb = GetComponent<Rigidbody2D>();
         _gc = GetComponentInChildren<GroundChecker>();
-		//animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
+        _gun = GetComponent<GunController>();
 	}
 
     // Update is called once per frame
@@ -57,6 +62,11 @@ public class PlayerController : MonoBehaviour
         if (!_gc.grounded)
         {
             Hover();
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            _gun.Shoot();
         }
     }
 
@@ -115,16 +125,16 @@ public class PlayerController : MonoBehaviour
 	// Flip rigidbody facing
 	void Flip()
 	{
-		// Indicate facing oposite direction
-		facingRight = !facingRight;
+        // Indicate facing oposite direction
+        facingRight = !facingRight;
 
-		// Get the local Scale
-		Vector3 theScale = transform.localScale;
+        // Get the local Scale
+        Vector3 theScale = transform.localScale;
 
-		//flip on x axis
-		theScale.x *= -1;
+        //flip on x axis
+        theScale.x *= -1;
 
-		//apply flip to local scale
-		transform.localScale = theScale;
-	}
+        //apply flip to local scale
+        transform.localScale = theScale;
+    }
 }
