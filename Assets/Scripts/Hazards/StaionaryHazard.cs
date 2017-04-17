@@ -25,12 +25,26 @@ public class StaionaryHazard : MonoBehaviour, IHittable {
     // This is what happens if something hits this object
     public void TakeHit()
     {
-        throw new NotImplementedException();
+        // this can't be destroyed, so it does nothing when hit
+        // by anyting
     }
 
     // what happens if this object hits another
     public void GiveHit(Collider2D other)
     {
-        throw new NotImplementedException();
+        if(other.gameObject.layer == 9)
+        {
+            print("The player has hit a stationary object that damages it\nIt must now die");
+            IHittable obj = other.GetComponent<IHittable>();
+            if(obj != null)
+            {
+                obj.TakeHit();
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GiveHit(collision.collider);
     }
 }

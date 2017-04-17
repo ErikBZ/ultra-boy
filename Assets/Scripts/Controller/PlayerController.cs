@@ -7,6 +7,7 @@ using UnityEngine;
 // therefore must be required
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(GroundChecker))]
+[RequireComponent(typeof(GunController))]
 
 // nothing in these scripts that inherit from MonoBehaviour should 
 // have public variables
@@ -24,16 +25,12 @@ public class PlayerController : MonoBehaviour
 	public float topSpeed = 10f;
 	bool facingRight = true;
 
-	//jumping variable
-	bool grounded = false;
+    //jumping variable called through the groundchecker
+    GroundChecker _gc;
+    public float _jumpSpeed = 10f;
 
-    // TODO make this into a reference for GroundChecker
-    // that has a bool called "grounded" which keeps track of
-    // the player's relation to the ground
-	public Transform groundCheck;  //check to see if character is grounded
-	float groundRadius = 0.2f; // How big circle is going to be when checking distance to the ground
-	public float jumpForce = 500f; // force of the jump
-	public LayerMask whatIsGround; // what layer is considered the ground
+    // the gun contgroller
+    GunController _gun;
 
 	// Use this for initialization
 	// this is basically a constructor
@@ -41,49 +38,65 @@ public class PlayerController : MonoBehaviour
 	{
 		// getting a reference to this gameobejcts rigdbody
 		rb = GetComponent<Rigidbody2D>();
-		//animator = GetComponent<Animator>();
+        _gc = GetComponentInChildren<GroundChecker>();
+        //animator = GetComponent<Animator>();
+        _gun = GetComponent<GunController>();
 	}
 
-	// Update is called once per frame
-	// DO NOT USE FOR MOVEMENT
-	private void Update()
-	{
-		if (grounded && Input.GetKeyDown (KeyCode.Space)) 
-		{
+    // Update is called once per frame
+    // DO NOT USE FOR MOVEMENT
+    private void Update()
+    {
+        if (_gc.grounded && Input.GetKeyDown(KeyCode.Space))
+        {
             // not on ground
             //animator.SetBool ("Ground", false);
-            
+
             // all this stuff should be done in Jump() too
             // add jump force to character's y-axis 
             // setting veloctiy may be a better choice
             // rb.velocity = someVel;
-            rb.AddForce(new Vector2(0, jumpForce));
-		}
+            Jump();
+        }
+        // while jumping you can "hover" by keeping the jump button pressed
+        if (!_gc.grounded)
+        {
+            Hover();
+        }
 
-	}
+        if (Input.GetMouseButtonDown(0))
+        {
+            _gun.Shoot();
+        }
+    }
 
-	// Fixed Update should be used whenever doing anything
-	// with phyiscs
-	private void FixedUpdate()
+    // Fixed Update should be used whenever doing anything
+    // with phyiscs
+    private void FixedUpdate()
 	{
-		Jump ();
-		MoveSideScroll ();
-		// have logic here where it checks for what buttons are pressed down
+        MoveSideScroll ();
+    }
 
-		// the "jump" button is just
-		// Input.GetAxis returns a float
-		print("The 'Jump' axis is returning: " + Input.GetAxis("Jump"));
-
-		print("The 'Horizontal' axis is returning: " + Input.GetAxis("Horizontal"));
-	}
-
-	// use this method for jumping
-	private void Jump()
+    // use this method for jumping
+    private void Jump()
 	{
-		// check for ground contact
-		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
-        // you have to use the rigidbody to set the velocty
+        // check for ground contact
+        rb.velocity = new Vector2(0, _jumpSpeed);
+        //rb.AddForce(new Vector2(0, _jumpSpeed));
+        //print(_jumpSpeed + " force added to the player");
 	}
+
+    private void Hover()
+    {
+        if(Input.GetKey(KeyCode.Space))
+        {
+            rb.gravityScale = 1.5f;
+        }
+        else
+        {
+            rb.gravityScale = 4f;
+        }
+    }
 
 	// this method should be used for moving left and right
 	private void MoveSideScroll()
@@ -112,16 +125,16 @@ public class PlayerController : MonoBehaviour
 	// Flip rigidbody facing
 	void Flip()
 	{
-		// Indicate facing oposite direction
-		facingRight = !facingRight;
+        // Indicate facing oposite direction
+        facingRight = !facingRight;
 
-		// Get the local Scale
-		Vector3 theScale = transform.localScale;
+        // Get the local Scale
+        Vector3 theScale = transform.localScale;
 
-		//flip on x axis
-		theScale.x *= -1;
+        //flip on x axis
+        theScale.x *= -1;
 
-		//apply flip to local scale
-		transform.localScale = theScale;
-	}
+        //apply flip to local scale
+        transform.localScale = theScale;
+    }
 }
