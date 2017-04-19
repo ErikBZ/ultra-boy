@@ -6,6 +6,7 @@ using UnityEngine;
 public class HealthController : MonoBehaviour, IHittable{
 
     public bool Alive;
+    public int Health; //can adjust for health. Enemies will typically have 1
 
 
     // Use this for initialization
@@ -15,13 +16,18 @@ public class HealthController : MonoBehaviour, IHittable{
 	
 	// Update is called once per frame
 	void Update () {
-		
+		//do nothing?
 	}
 
     // TODO implmeent this so the player dies when 
     void Die()
     {
-        print("I'm dying nooo");
+        
+        if(gameObject.CompareTag("Player"))
+            print("I'm dying nooo");
+
+        if (gameObject.CompareTag("enemy"))
+            print("enemy down");
     }
 
     public void GiveHit(Collider2D other)
@@ -32,6 +38,9 @@ public class HealthController : MonoBehaviour, IHittable{
     public void TakeHit()
     {
         // this kills the gameobject.
-        Die();
+        Health--;
+
+        if(Health <= 0)
+            Die();
     }
 }
