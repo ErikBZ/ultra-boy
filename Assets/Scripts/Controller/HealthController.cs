@@ -39,7 +39,7 @@ public class HealthController : MonoBehaviour, IHittable{
     {
         // this kills the gameobject.
         Health--;
-
+        //ha!
         if(Health <= 0)
             Die();
     }
