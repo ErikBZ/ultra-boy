@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour
     public float _jumpSpeed = 10f;
 
     // the gun contgroller
-    GunController _gun;
-
+    public GunController _gun;
+    
 	// Use this for initialization
 	// this is basically a constructor
 	private void Start()
