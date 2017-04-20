@@ -26,6 +26,9 @@ public class GameOverUI : MonoBehaviour {
 	public void Retry()
 	{
 		Debug.Log ("Restart from checkpoint");
-		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+
+		// Loads screen based on checkpoint
+
+		//ScreenManger.LoadScreen ();
 	}
 }
