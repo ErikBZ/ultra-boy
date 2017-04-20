@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
     // the gun contgroller
     public GunController _gun;
+
+    private bool isAI = false;
     
 	// Use this for initialization
 	// this is basically a constructor
@@ -47,26 +49,29 @@ public class PlayerController : MonoBehaviour
     // DO NOT USE FOR MOVEMENT
     private void Update()
     {
-        if (_gc.grounded && Input.GetKeyDown(KeyCode.Space))
+        if(!isAI)
         {
-            // not on ground
-            //animator.SetBool ("Ground", false);
+            if (_gc.grounded && Input.GetKeyDown(KeyCode.Space))
+            {
+                // not on ground
+                //animator.SetBool ("Ground", false);
 
-            // all this stuff should be done in Jump() too
-            // add jump force to character's y-axis 
-            // setting veloctiy may be a better choice
-            // rb.velocity = someVel;
-            Jump();
-        }
-        // while jumping you can "hover" by keeping the jump button pressed
-        if (!_gc.grounded)
-        {
-            Hover();
-        }
+                // all this stuff should be done in Jump() too
+                // add jump force to character's y-axis 
+                // setting veloctiy may be a better choice
+                // rb.velocity = someVel;
+                Jump();
+            }
+            // while jumping you can "hover" by keeping the jump button pressed
+            if (!_gc.grounded)
+            {
+                Hover();
+            }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            _gun.Shoot();
+            if (Input.GetMouseButtonDown(0))
+            {
+                _gun.Shoot();
+            }
         }
     }
 
@@ -74,7 +79,12 @@ public class PlayerController : MonoBehaviour
     // with phyiscs
     private void FixedUpdate()
 	{
-        MoveSideScroll ();
+        if(!isAI)
+        {
+            // move direction
+            float move = Input.GetAxis("Horizontal");
+            MoveSideScroll(move);
+        }
     }
 
     // use this method for jumping
@@ -99,10 +109,10 @@ public class PlayerController : MonoBehaviour
     }
 
 	// this method should be used for moving left and right
-	private void MoveSideScroll()
+	public void MoveSideScroll(float move)
 	{
 		//get move direction
-		float move = Input.GetAxis ("Horizontal");
+		//float move = Input.GetAxis ("Horizontal");
 
 		//add velocity to the rigidbody in the move direction * speed
 		rb.velocity = new Vector2(move*topSpeed, rb.velocity.y);
@@ -136,5 +146,10 @@ public class PlayerController : MonoBehaviour
 
         //apply flip to local scale
         transform.localScale = theScale;
+    }
+
+    public void SetAsAI()
+    {
+        isAI = true;
     }
 }

@@ -37,6 +37,9 @@ public class GunController : MonoBehaviour {
         // instantiate a bullet then shoot it
         print("bang"); //we can keep this for test purposes
 
+        // this or isn't needed, just make sure that Time.time is greater than the lastshot
+        // plus the fire rate
+        // TODO get ride of canShoot
         if ( (Time.time > fireRate + lastShot) || canShoot == true )
         {
             //"Shoots" by spawning a Bullet asset at firePoint. Bullet has a BulletController on it adjust speed.
@@ -45,6 +48,10 @@ public class GunController : MonoBehaviour {
             lastShot = Time.time;
 
             bullet.GetComponent<BulletController>().ownerLayer = this.gameObject.layer;
+            // this will either be 9 or 8
+            // will cause enemies to not collide with enmey bullets
+            // and player bullets not to collide with player bullets
+            bullet.layer = this.gameObject.layer;
 
             //used to adjust to canShoot
             if (Time.time > fireRate + lastShot)
