@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 9cda671f4728e4d1885fb9405ebdfbed
+timeCreated: 1492658255
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Apple Garamond Light
+  fontNames:
+  - Apple Garamond Light
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

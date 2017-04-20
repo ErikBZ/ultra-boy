@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 84a85818f8fcb489792ee0f26358048c
+timeCreated: 1492658016
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Geneva
+  fontNames:
+  - Geneva
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
