@@ -8,6 +8,7 @@ public class BulletController : MonoBehaviour, IHittable
     //variable we can change to modify the speed of the bullet
     public float Speed;
     public int Damage;
+    public Vector2 vel;
 
     public int ownerLayer;
 
@@ -34,6 +35,11 @@ public class BulletController : MonoBehaviour, IHittable
         }
     }
 
+    public void SetDirection(int i)
+    {
+        Speed = Speed * i;
+    }
+
     public void GiveHit(Collider2D other)
     {
         IHittable obj = other.GetComponent<IHittable>();
@@ -49,6 +55,5 @@ public class BulletController : MonoBehaviour, IHittable
 
     public void TakeHit()
     {
-        throw new NotImplementedException();
     }
 }
