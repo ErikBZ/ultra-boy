@@ -4,30 +4,33 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyAI : MonoBehaviour
+{
 
     public Behvior _typeofAI;
     // for wandering
     public Transform PostOne;
     public Transform PostTwo;
-    private int direction; 
+    private int direction;
 
     // for shooting
     public float Range;
+    public Transform playerCharacter;
 
     // References to gun and player controller
     PlayerController _pc;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
+        playerCharacter = null;
         _pc = GetComponent<PlayerController>();
         _pc.SetAsAI();
         direction = -1;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
     }
 
@@ -50,7 +53,7 @@ public class EnemyAI : MonoBehaviour {
         // wanders between two posts
         _pc.MoveSideScroll(direction);
 
-        if (direction == -1 && Close(transform.position.x, PostOne.position.x, 0.1f)||
+        if (direction == -1 && Close(transform.position.x, PostOne.position.x, 0.1f) ||
             direction == 1 && Close(transform.position.x, PostTwo.position.x, 0.1f))
         {
             direction *= -1;
@@ -77,6 +80,63 @@ public class EnemyAI : MonoBehaviour {
     // start the shooting animation and shoot a couple of bullets 
     void Shoot()
     {
+        if(playerCharacter == null)
+        {
+            return;
+        }
 
+        CheckPlayerCharacterPosition(playerCharacter);
+        _pc._gun.Shoot();
+    }
+
+    void CheckPlayerCharacterPosition(Transform player)
+    {
+        if(player == null)
+        {
+            // don't do anything
+            return;
+        }
+
+        // the player is to the right of this enemy
+        if(player.position.x > transform.position.x && !_pc.FacingRight)
+        {
+            _pc.Flip();
+        }
+        // player is not to the left of this enemy
+        else if(player.position.x < transform.position.x && _pc.FacingRight)
+        {
+            _pc.Flip();
+        }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Behvior.Shooter == _typeofAI)
+        {
+            GameObject go = collision.GetComponent<Collider2D>().gameObject;
+            if (go.layer == 9)
+            {
+                if (go.GetComponent<PlayerController>() != null)
+                {
+                    playerCharacter = go.transform;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (Behvior.Shooter == _typeofAI)
+        {
+            GameObject go = collision.GetComponent<Collider2D>().gameObject;
+            if (go.layer == 9)
+            {
+                if (go.GetComponent<PlayerController>() != null)
+                {
+                    playerCharacter = null;
+                }
+            }
+        }
     }
 }

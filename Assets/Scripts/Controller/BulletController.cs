@@ -37,11 +37,13 @@ public class BulletController : MonoBehaviour, IHittable
     public void GiveHit(Collider2D other)
     {
         IHittable obj = other.GetComponent<IHittable>();
-        for (int i = 0; i < Damage; i++)
+        if (obj != null)
         {
-            obj.TakeHit();
+            for (int i = 0; i < Damage; i++)
+            {
+                obj.TakeHit();
+            }
         }
-
     }
 
 

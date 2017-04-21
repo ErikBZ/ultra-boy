@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
 	//moving variables
 	public float topSpeed = 10f;
-	bool facingRight = true;
+	public bool FacingRight = true;
 
     //jumping variable called through the groundchecker
     GroundChecker _gc;
@@ -61,15 +61,18 @@ public class PlayerController : MonoBehaviour
                 // setting veloctiy may be a better choice
                 // rb.velocity = someVel;
                 Jump();
+                print("Hello");
             }
+           
             // while jumping you can "hover" by keeping the jump button pressed
             if (!_gc.grounded)
             {
                 Hover();
             }
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetAxis("Fire1") != 0)  
             {
+                print("Hey");
                 _gun.Shoot();
             }
         }
@@ -122,21 +125,21 @@ public class PlayerController : MonoBehaviour
         // animator.SetFloat ("Speed", Mathf.Abs (move));
 
 		//flip direction
-		if (move > 0 && !facingRight) 
+		if (move > 0 && !FacingRight) 
 		{
 			Flip ();
 		}
-		else if( move < 0 && facingRight )
+		else if( move < 0 && FacingRight )
 		{
 			Flip();
 		}
 	}
 
 	// Flip rigidbody facing
-	void Flip()
+	public void Flip()
 	{
         // Indicate facing oposite direction
-        facingRight = !facingRight;
+        FacingRight = !FacingRight;
 
         // Get the local Scale
         Vector3 theScale = transform.localScale;
