@@ -20,6 +20,12 @@ public class GroundChecker : MonoBehaviour {
         grounded = true;
     }
 
+    // precauation since sometimes the jump causes some weird glitches
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        grounded = true;
+    }
+
     private void OnTriggerExit2D(Collider2D collision){
         grounded = false;
     }
