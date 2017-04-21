@@ -51,6 +51,10 @@ public class GunController : MonoBehaviour {
             {
                 bullet.GetComponent<BulletController>().SetDirection(-1);
             }
+            else
+            {
+                bullet.GetComponent<BulletController>().SetDirection(1);
+            }
 
             bullet.GetComponent<BulletController>().ownerLayer = this.gameObject.layer;
             // this will either be 9 or 8

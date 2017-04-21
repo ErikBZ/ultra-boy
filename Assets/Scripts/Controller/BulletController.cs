@@ -22,7 +22,6 @@ public class BulletController : MonoBehaviour, IHittable
 	void Update ()
     {
         //code for the speed of the bullets
-        GetComponent<Rigidbody2D>().velocity = new Vector2(Speed, GetComponent<Rigidbody2D>().velocity.y);
 	}
 
     void OnTriggerEnter2D(Collider2D other)
@@ -38,6 +37,7 @@ public class BulletController : MonoBehaviour, IHittable
     public void SetDirection(int i)
     {
         Speed = Speed * i;
+        GetComponent<Rigidbody2D>().velocity = new Vector2(Speed, GetComponent<Rigidbody2D>().velocity.y);
     }
 
     public void GiveHit(Collider2D other)
