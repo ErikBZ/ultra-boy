@@ -24,17 +24,29 @@ public class BulletController : MonoBehaviour, IHittable
         //code for the speed of the bullets
 	}
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        //this checks if the thing its hitting is an enemy. If its an enemy it "deletes" its.
-        //we can modify this once we get health working.
-        if ( (other.gameObject.layer == 10 || other.gameObject.layer == 9) && other.gameObject.layer != ownerLayer)
-        {
-            GiveHit(other);
-        }
+	// This seems to work over OnTriggerEnter2d
+	private void OnCollisionEnter2D(Collision2D other)
+	{
+		//this checks if the thing its hitting is an enemy. If its an enemy it "deletes" its.
+		//we can modify this once we get health working.
+		if ((other.gameObject.layer == 10 || other.gameObject.layer == 9) && other.gameObject.layer != ownerLayer) {
+			GiveHit (other.collider);
 
-        Destroy(gameObject);
-    }
+		}
+		Destroy(gameObject);
+	}
+
+	//	void OnTriggerEnter2D(Collider2D other)
+	//	{
+	//		//this checks if the thing its hitting is an enemy. If its an enemy it "deletes" its.
+	//		//we can modify this once we get health working.
+	//		if ( (other.gameObject.layer == 10 || other.gameObject.layer == 9) && other.gameObject.layer != ownerLayer)
+	//		{
+	//			GiveHit(other);
+	//		}
+	//
+	//		Destroy(gameObject);
+	//	}
 
     public void SetDirection(int i)
     {

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System;
 
 public class GameOverUI : MonoBehaviour {
-	
+
 	// Use this for initialization
 	void Start()
 	{
@@ -28,7 +28,7 @@ public class GameOverUI : MonoBehaviour {
 		Debug.Log ("Restart from checkpoint");
 
 		// Loads screen based on checkpoint
-
-		//ScreenManger.LoadScreen ();
+		//		SceneManager.LoadScene ( SceneManager.GetActiveScene().buildIndex );
+		SceneManager.LoadScene("other");
 	}
 }
