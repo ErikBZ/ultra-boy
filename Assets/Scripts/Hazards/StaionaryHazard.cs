@@ -27,6 +27,7 @@ public class StaionaryHazard : MonoBehaviour, IHittable {
     {
         // this can't be destroyed, so it does nothing when hit
         // by anyting
+
     }
 
     // what happens if this object hits another
