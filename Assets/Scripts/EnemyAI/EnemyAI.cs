@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : MonoBehaviour, IHittable
 {
 
     public Behvior _typeofAI;
@@ -139,4 +139,26 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
+
+	public void TakeHit()
+	{
+	}
+
+	public void GiveHit(Collider2D other)
+	{
+		if(other.gameObject.layer == 9)
+		{
+			print("The player has hit a stationary object that damages it\nIt must now die");
+			IHittable obj = other.GetComponent<IHittable>();
+			if(obj != null)
+			{
+				obj.TakeHit();
+			}
+		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		GiveHit(collision.collider);
+	}
 }
