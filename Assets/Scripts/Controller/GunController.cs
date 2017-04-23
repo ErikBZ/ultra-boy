@@ -35,7 +35,6 @@ public class GunController : MonoBehaviour {
     public void Shoot()
     {
         // instantiate a bullet then shoot it
-        print("bang"); //we can keep this for test purposes
 
         // this or isn't needed, just make sure that Time.time is greater than the lastshot
         // plus the fire rate

@@ -14,7 +14,6 @@ public class EnemyAI : MonoBehaviour
     private int direction;
 
     // for shooting
-    public float Range;
     public Transform playerCharacter;
 
     // References to gun and player controller
@@ -117,7 +116,8 @@ public class EnemyAI : MonoBehaviour
             GameObject go = collision.GetComponent<Collider2D>().gameObject;
             if (go.layer == 9)
             {
-                if (go.GetComponent<PlayerController>() != null)
+                print("go is layer 9 " + go.name);
+                if (go.GetComponentInParent<PlayerController>() != null)
                 {
                     playerCharacter = go.transform;
                 }
@@ -132,7 +132,7 @@ public class EnemyAI : MonoBehaviour
             GameObject go = collision.GetComponent<Collider2D>().gameObject;
             if (go.layer == 9)
             {
-                if (go.GetComponent<PlayerController>() != null)
+                if (go.GetComponentInParent<PlayerController>() != null)
                 {
                     playerCharacter = null;
                 }

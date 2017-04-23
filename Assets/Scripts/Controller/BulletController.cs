@@ -12,6 +12,9 @@ public class BulletController : MonoBehaviour, IHittable
 
     public int ownerLayer;
 
+    float lifetime = 1f;
+    float counter = 0f;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -22,6 +25,11 @@ public class BulletController : MonoBehaviour, IHittable
 	void Update ()
     {
         //code for the speed of the bullets
+        counter += Time.deltaTime;
+        if(counter > lifetime)
+        {
+            Destroy(gameObject);
+        }
 	}
 
 	// This seems to work over OnTriggerEnter2d
@@ -30,8 +38,8 @@ public class BulletController : MonoBehaviour, IHittable
 		//this checks if the thing its hitting is an enemy. If its an enemy it "deletes" its.
 		//we can modify this once we get health working.
 		if ((other.gameObject.layer == 10 || other.gameObject.layer == 9) && other.gameObject.layer != ownerLayer) {
-			GiveHit (other.collider);
-
+            print("Giving hit to " + other.gameObject.name);
+            GiveHit (other.collider);
 		}
 		Destroy(gameObject);
 	}
@@ -56,7 +64,7 @@ public class BulletController : MonoBehaviour, IHittable
 
     public void GiveHit(Collider2D other)
     {
-        IHittable obj = other.GetComponent<IHittable>();
+        IHittable obj = other.GetComponentInParent<IHittable>();
         if (obj != null)
         {
             for (int i = 0; i < Damage; i++)

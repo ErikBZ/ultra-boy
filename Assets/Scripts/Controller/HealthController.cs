@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class HealthController : MonoBehaviour, IHittable{
 
 	public int Health; //can adjust for health. Enemies will typically have 1
+    public GameObject deathUI;
 
 
 	// Use this for initialization
@@ -28,8 +29,10 @@ public class HealthController : MonoBehaviour, IHittable{
 	{
 
 		if(gameObject.layer == 9)
-			SceneManager.LoadScene ("Gameover");
-		//            print("I'm dying nooo");
+        {
+            deathUI.active = true;
+            gameObject.SetActive(false);
+        }
 
 		if (gameObject.layer == 10)
 			Destroy(gameObject);
@@ -49,4 +52,11 @@ public class HealthController : MonoBehaviour, IHittable{
 		if(Health <= 0)
 			Die();
 	}
+
+    public void GoToCheckpoint(Vector2 pos)
+    {
+        transform.position = pos;
+        Health = 1;
+        gameObject.SetActive(true);
+    }
 }

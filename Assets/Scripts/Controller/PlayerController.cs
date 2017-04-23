@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 	// GameObjects compontents and references
 	Rigidbody2D rb;
     // this isn't needed just yet
-    // Animator animator;
+    Animator animator;
 
 	//moving variables
 	public float topSpeed = 10f;
@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
         _gc = GetComponentInChildren<GroundChecker>();
         //animator = GetComponent<Animator>();
         _gun = GetComponent<GunController>();
+        animator = GetComponent<Animator>();
 	}
 
     // Update is called once per frame
@@ -61,7 +62,6 @@ public class PlayerController : MonoBehaviour
                 // setting veloctiy may be a better choice
                 // rb.velocity = someVel;
                 Jump();
-                print("Hello");
             }
            
             // while jumping you can "hover" by keeping the jump button pressed
@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetAxis("Fire1") != 0)  
             {
-                print("Hey");
                 _gun.Shoot();
             }
         }
@@ -82,10 +81,16 @@ public class PlayerController : MonoBehaviour
     // with phyiscs
     private void FixedUpdate()
 	{
-        if(!isAI)
+        if (!isAI)
         {
             // move direction
             float move = Input.GetAxis("Horizontal");
+
+            if (move == 0)
+            {
+                animator.SetBool("running", false);
+
+            }
             MoveSideScroll(move);
         }
     }
@@ -114,11 +119,15 @@ public class PlayerController : MonoBehaviour
 	// this method should be used for moving left and right
 	public void MoveSideScroll(float move)
 	{
-		//get move direction
-		//float move = Input.GetAxis ("Horizontal");
+        if(move != 0)
+        {
+            animator.SetBool("running", true);
+        }
+        //get move direction
+        //float move = Input.GetAxis ("Horizontal");
 
-		//add velocity to the rigidbody in the move direction * speed
-		rb.velocity = new Vector2(move*topSpeed, rb.velocity.y);
+        //add velocity to the rigidbody in the move direction * speed
+        rb.velocity = new Vector2(move*topSpeed, rb.velocity.y);
 
         //Set a float to speed based on the amt of float value (0.1)
         // this once we have a sprite to animate. for now leave it commented

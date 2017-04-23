@@ -6,9 +6,18 @@ using System;
 
 public class GameOverUI : MonoBehaviour {
 
+    public Transform defTransform;
+    public Vector2 Checkpoint;
+    public HealthController Player;
+
 	// Use this for initialization
 	void Start()
 	{
+        this.gameObject.SetActive(false);
+        if(defTransform != null)
+        {
+            Checkpoint = defTransform.position;
+        }
 	}
 
 	// Update is called once per frame
@@ -27,8 +36,10 @@ public class GameOverUI : MonoBehaviour {
 	{
 		Debug.Log ("Restart from checkpoint");
 
-		// Loads screen based on checkpoint
-		//		SceneManager.LoadScene ( SceneManager.GetActiveScene().buildIndex );
-		SceneManager.LoadScene("other");
+        // Loads screen based on checkpoint
+        //		SceneManager.LoadScene ( SceneManager.GetActiveScene().buildIndex );
+
+        Player.GoToCheckpoint(Checkpoint);
+        this.gameObject.SetActive(false);
 	}
 }
