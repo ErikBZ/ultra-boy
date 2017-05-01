@@ -35,8 +35,7 @@ public class StaionaryHazard : MonoBehaviour, IHittable {
     {
         if(other.gameObject.layer == 9)
         {
-            print("The player has hit a stationary object that damages it\nIt must now die");
-            IHittable obj = other.GetComponent<IHittable>();
+            IHittable obj = other.GetComponentInParent<IHittable>();
             if(obj != null)
             {
                 obj.TakeHit();

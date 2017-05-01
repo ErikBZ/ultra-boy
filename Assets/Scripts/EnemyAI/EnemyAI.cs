@@ -116,7 +116,6 @@ public class EnemyAI : MonoBehaviour
             GameObject go = collision.GetComponent<Collider2D>().gameObject;
             if (go.layer == 9)
             {
-                print("go is layer 9 " + go.name);
                 if (go.GetComponentInParent<PlayerController>() != null)
                 {
                     playerCharacter = go.transform;

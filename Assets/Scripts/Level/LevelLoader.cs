@@ -7,6 +7,9 @@ public class LevelLoader : MonoBehaviour
 {
 
     // Use this for initialization
+
+    public int nextLevel;
+
     void Start()
     {
     }
@@ -28,4 +31,10 @@ public class LevelLoader : MonoBehaviour
     {
         Application.Quit();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        LoadLevel(nextLevel);
+    }
+        
 }

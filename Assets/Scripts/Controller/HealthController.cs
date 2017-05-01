@@ -25,12 +25,12 @@ public class HealthController : MonoBehaviour, IHittable{
 	}
 
 	// TODO implmeent this so the player dies when 
-	void Die()
+	public void Die()
 	{
 
 		if(gameObject.layer == 9)
         {
-            deathUI.active = true;
+            deathUI.SetActive(true);     
             gameObject.SetActive(false);
         }
 

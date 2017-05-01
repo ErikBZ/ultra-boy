@@ -38,7 +38,6 @@ public class BulletController : MonoBehaviour, IHittable
 		//this checks if the thing its hitting is an enemy. If its an enemy it "deletes" its.
 		//we can modify this once we get health working.
 		if ((other.gameObject.layer == 10 || other.gameObject.layer == 9) && other.gameObject.layer != ownerLayer) {
-            print("Giving hit to " + other.gameObject.name);
             GiveHit (other.collider);
 		}
 		Destroy(gameObject);

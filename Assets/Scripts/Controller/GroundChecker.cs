@@ -17,7 +17,10 @@ public class GroundChecker : MonoBehaviour {
 	}
 
     private void OnTriggerEnter2D(Collider2D collision){
-        grounded = true;
+        if(collision.GetComponent<Collider2D>().gameObject.layer == 10)
+        {
+            grounded = true;
+        }
     }
 
     // precauation since sometimes the jump causes some weird glitches
